@@ -40,7 +40,7 @@ def draw_enemies(enemy_list):
 
 def drop_enemies(enemy_list):	
 	delay = random.random()
-	if len(enemy_list) < enemy_number and delay < 0.5:
+	if len(enemy_list) < enemy_number and delay < 0.1:
 		x_position = random.randint(0,WIDTH-enemy_size)
 		y_position = 0
 		enemy_list.append([x_position,y_position])
