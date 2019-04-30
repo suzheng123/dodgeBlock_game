@@ -1,5 +1,9 @@
 # dodgeBlock_game
 
+import pygame
+
+player-block at the buttom 
+
 enemy-blocks drop as random
 
 player-block need to move left and right to avoid collision with enemy-blocks
