@@ -15,11 +15,18 @@ LIGHT_PURPLE = (227, 161, 234)
 
 block_speed = 5
 
+BACKGROUND = pygame.image.load('imgs/background.png')
+
+
+PLAYER_ORIGINAL = pygame.image.load('imgs/watermelon_whole.jpg')
 player_size = 50
+PLAYER_ORIGINAL = pygame.transform.scale(PLAYER_ORIGINAL,(player_size,player_size))
 player_position = [WIDTH/4,HEIGHT-2*player_size]
 
-enemy_number = 5
+ENEMY_IMG = pygame.image.load('imgs/knift.jpg')
 enemy_size = 50
+ENEMY_IMG = pygame.transform.scale(ENEMY_IMG,(enemy_size,enemy_size))
+enemy_number = 5
 enemy_position = [random.randint(0,WIDTH-enemy_size),0]
 enemy_list = [enemy_position]
 
@@ -33,14 +40,20 @@ clock = pygame.time.Clock()
 
 myFont = pygame.font.SysFont("monospace",35)	# printout the score
 
+def draw_window(screen):
+	screen.blit(BACKGROUND,(0,0))	# background
+	screen.blit(PLAYER_ORIGINAL,(player_position[0],player_position[1]))
+
+
 def draw_enemies(enemy_list):
 	for enemy_position in enemy_list:
-		pygame.draw.rect(screen,GOLDEN_ORANGE,(enemy_position[0],enemy_position[1],\
-										enemy_size,enemy_size))
+		screen.blit(ENEMY_IMG,(enemy_position[0],enemy_position[1],\
+	 									enemy_size,enemy_size))
+
 
 def drop_enemies(enemy_list):	
 	delay = random.random()
-	if len(enemy_list) < enemy_number and delay < 0.1:
+	if len(enemy_list) < enemy_number and delay < 0.05:
 		x_position = random.randint(0,WIDTH-enemy_size)
 		y_position = 0
 		enemy_list.append([x_position,y_position])
@@ -54,6 +67,12 @@ def update_enemy_position(enemy_list,score):
 			enemy_list.pop(index)
 			score += 1
 	return score
+
+def show_score(score):
+	text = "SCORE: " + str(score)
+	lable = myFont.render(text, 1, LIGHT_PURPLE)
+	screen.blit(lable,(WIDTH-200,HEIGHT-40))
+
 
 def collision_check(enemy_list,player_position):
 	for enemy_position in enemy_list:
@@ -92,18 +111,11 @@ while not game_over:
 
 			player_position = [x,y]
 
-	screen.fill(BACKGROUND_COLOR_BLACK)
-
-	# player initial position
-	pygame.draw.rect(screen,APPLE_GREEN,(player_position[0],player_position[1],\
-										player_size,player_size)) 
+	draw_window(screen) # fill background, draw player	
 	drop_enemies(enemy_list)
 	score = update_enemy_position(enemy_list,score)
-
-	# show score
-	text = "SCORE: " + str(score)
-	lable = myFont.render(text, 1, LIGHT_PURPLE)
-	screen.blit(lable,(WIDTH-200,HEIGHT-40))
+	show_score(score)
+	
 
 	if collision_check(enemy_list,player_position):
 		game_over = True
