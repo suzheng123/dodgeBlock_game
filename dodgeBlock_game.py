@@ -15,7 +15,7 @@ LIGHT_PURPLE = (227, 161, 234)
 
 block_speed = 5
 
-BACKGROUND = pygame.image.load('imgs/background.png')
+BACKGROUND = pygame.image.load('imgs/background.jpg')
 
 
 PLAYER_ORIGINAL = pygame.image.load('imgs/watermelon_whole.jpg')
